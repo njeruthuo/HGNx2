@@ -56,7 +56,6 @@ const NavBar = ({
     const boxStyle = {
         width: "100vw",
         position: "relative",
-        color: "white",
         height: "100vh",
         backgroundImage: `url(${backGroundImage})`,
         backgroundSize: "cover",

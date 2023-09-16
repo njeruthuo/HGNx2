@@ -5,6 +5,7 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Link } from "react-router-dom";
+import SkeletonStructure from "./pages/SkeletonStructure";
 
 const API_KEY = "7ade6bbe4bba60190f504a7e5436a500";
 const query = "query";
@@ -15,6 +16,7 @@ function App() {
     const [movies, setMovies] = useState([]);
     const [cover, setCover] = useState();
     const [moviesList, setMoviesList] = useState();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetch(API_URL)
@@ -23,6 +25,7 @@ function App() {
                 setMovies(data.results.slice(1, 11));
                 setCover(data.results[0]);
                 setMoviesList(data.results);
+                setLoading(false);
             })
             .then((error) => console.log(error));
     }, []);
@@ -48,14 +51,17 @@ function App() {
                         </IconButton>
                     </>
                 </Box>
-
-                <Grid container spacing={3}>
-                    {movies.map((movie, index) => (
-                        <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
-                            <MovieList {...movie} />
-                        </Grid>
-                    ))}
-                </Grid>
+                {loading ? (
+                    <SkeletonStructure />
+                ) : (
+                    <Grid container spacing={3}>
+                        {movies.map((movie, index) => (
+                            <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
+                                <MovieList {...movie} />
+                            </Grid>
+                        ))}
+                    </Grid>
+                )}
             </Container>
 
             <Footer />
