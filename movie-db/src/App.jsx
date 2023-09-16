@@ -31,7 +31,7 @@ function App() {
     }, []);
     return (
         <>
-            <NavBar {...cover} movieList={moviesList} />
+            <NavBar {...cover} movieList={moviesList} loading={loading} />
             <Container>
                 <Box
                     sx={{

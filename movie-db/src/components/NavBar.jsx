@@ -1,4 +1,11 @@
-import { Box, IconButton, Typography, Button, Grid } from "@mui/material";
+import {
+    Box,
+    IconButton,
+    Typography,
+    Button,
+    Grid,
+    Skeleton,
+} from "@mui/material";
 import React from "react";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
 import FreeSoloCreateOption from "./Search";
@@ -14,6 +21,7 @@ const NavBar = ({
     vote_average,
     poster_path,
     movieList,
+    loading,
 } = props) => {
     const backGroundImage = IMAGE_BASE_URL + poster_path;
 
@@ -99,63 +107,81 @@ const NavBar = ({
         borderRadius: "20px",
         marginTop: "0.5rem",
     };
+    const SingleSkeleton = () => {
+        return (
+            <>
+                <Skeleton
+                    width={"100%"}
+                    height={"40vh"}
+                    variant="rectangular"
+                />
+                <Skeleton />
+            </>
+        );
+    };
     return (
-        <Box sx={boxStyle}>
-            <Box sx={topBar}>
-                <Box sx={boxes}>
-                    <IconButton style={iconButton}>
-                        <LiveTvIcon style={icon} />
-                    </IconButton>
-                    <Typography>MovieBox</Typography>
-                </Box>
+        <>
+            {loading ? (
+                <SingleSkeleton />
+            ) : (
+                <Box sx={boxStyle}>
+                    <Box sx={topBar}>
+                        <Box sx={boxes}>
+                            <IconButton style={iconButton}>
+                                <LiveTvIcon style={icon} />
+                            </IconButton>
+                            <Typography>MovieBox</Typography>
+                        </Box>
 
-                <Box sx={boxes} className="searchBar">
-                    <FreeSoloCreateOption />
-                </Box>
+                        <Box sx={boxes} className="searchBar">
+                            <FreeSoloCreateOption />
+                        </Box>
 
-                <Box sx={boxes}>
-                    <Typography>Sign In</Typography>
-                    <IconButton style={iconButton}>
-                        <DragHandleIcon style={icon} />
-                    </IconButton>
-                </Box>
-            </Box>
-            <Box sx={infoBox}>
-                <Typography variant="h2" component="h5">
-                    {title}
-                </Typography>
-                <Box sx={styles.data_styles}>
-                    <Box sx={{ display: "flex" }}>
-                        <img
-                            className="imdb-logo"
-                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/575px-IMDB_Logo_2016.svg.png"
-                            alt=""
-                        />
-                        <Typography sx={styles.data_text_styles}>{`${
-                            vote_average * 10
-                        } / 100`}</Typography>
+                        <Box sx={boxes}>
+                            <Typography>Sign In</Typography>
+                            <IconButton style={iconButton}>
+                                <DragHandleIcon style={icon} />
+                            </IconButton>
+                        </Box>
                     </Box>
-                    <Box sx={{ display: "flex" }}>
-                        <img
-                            className="imdb-logo"
-                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Rotten_Tomatoes.svg/1200px-Rotten_Tomatoes.svg.png"
-                            alt=""
-                        />
-                        <Typography sx={styles.data_text_styles}>{`${
-                            vote_average * 10
-                        }%`}</Typography>
+                    <Box sx={infoBox}>
+                        <Typography variant="h2" component="h5">
+                            {title}
+                        </Typography>
+                        <Box sx={styles.data_styles}>
+                            <Box sx={{ display: "flex" }}>
+                                <img
+                                    className="imdb-logo"
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/575px-IMDB_Logo_2016.svg.png"
+                                    alt=""
+                                />
+                                <Typography sx={styles.data_text_styles}>{`${
+                                    vote_average * 10
+                                } / 100`}</Typography>
+                            </Box>
+                            <Box sx={{ display: "flex" }}>
+                                <img
+                                    className="imdb-logo"
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Rotten_Tomatoes.svg/1200px-Rotten_Tomatoes.svg.png"
+                                    alt=""
+                                />
+                                <Typography sx={styles.data_text_styles}>{`${
+                                    vote_average * 10
+                                }%`}</Typography>
+                            </Box>
+                        </Box>
+                        <Typography>{overview}</Typography>
+
+                        <Box sx={trailer}>
+                            <IconButton className="button">
+                                <PlayCircleFilledWhiteIcon />
+                                <Typography>Play Trailer</Typography>
+                            </IconButton>
+                        </Box>
                     </Box>
                 </Box>
-                <Typography>{overview}</Typography>
-
-                <Box sx={trailer}>
-                    <IconButton className="button">
-                        <PlayCircleFilledWhiteIcon />
-                        <Typography>Play Trailer</Typography>
-                    </IconButton>
-                </Box>
-            </Box>
-        </Box>
+            )}
+        </>
     );
 };
 
